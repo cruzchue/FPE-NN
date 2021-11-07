@@ -6,7 +6,7 @@ import tensorflow as tf
 from scipy import signal, ndimage
 from keras import callbacks
 
-from Modules.PxtData import PxtDatagit
+from Modules.PxtData import PxtData
 from Modules.FPLeastSquare import FPLeastSquare
 from Modules.FPENet import FPENet
 from Modules.Loss import Loss
