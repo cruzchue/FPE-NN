@@ -33,7 +33,8 @@ gau_no = 1                  # add how many Gaussian distribution in the initial 
 op_dir = './Pxt/'           # directory of the output npz
 op_name = 'sinusoid.npz'    # name of the output npz
 
-show_plot = False           # boolean, plot or not plot the generated distributions
+#show_plot = False           # boolean, plot or not plot the generated distributions
+show_plot = True
 # ~~~~ setting ends ~~~~
 
 
@@ -126,10 +127,10 @@ def main():
     if show_plot:
         for i in range(n_sample):
             plt.figure(figsize=[9, 6])
-            plt.plot(sliced_x, sliced_true_pxt[i, 0, :], 'k-',
-                     label='p_initial', linewidth=4)
-            plt.plot(sliced_x, sliced_true_pxt[i, -1, :], 'r-',
-                     label='p_final', linewidth=4)
+            plt.plot(sliced_x, sliced_true_pxt[i, 0, :], 'k.-',
+                     label='p_initial', linewidth=1)
+            plt.plot(sliced_x, sliced_true_pxt[i, -1, :], 'r.-',
+                     label='p_final', linewidth=1)
 
             plt.title('sample {}'.format(i), fontsize=20)
             plt.legend(fontsize=20)
@@ -137,6 +138,11 @@ def main():
             plt.pause(1)
             plt.close()
 
+            # ERCC: areas for pdf
+            areaInitial=np.trapz(sliced_true_pxt[i, 0, :],x=sliced_x)
+            areaFinal=np.trapz(sliced_true_pxt[i, -1, :],x=sliced_x)
+            np.disp('areaInitial: ' + str(areaInitial) )
+            np.disp('areaFinal: ' + str(areaFinal) )
 
 if __name__ == '__main__':
     main()

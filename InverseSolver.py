@@ -35,7 +35,8 @@ p_epoch_factor = 5              # factor to control the epoch increasing of p tr
 p_patience = 10                 # patience of p trainer, for early stopping
 p_recur_win = 5                 # how many neighbouring time points used in p trainer
 
-n_iter = 500                    # how many rounds of alternating training on gh and p
+#n_iter = 500                    # how many rounds of alternating training on gh and p
+n_iter = 25
 t_sro = 7                       # total sum rules for generating derivative matrix, refer to PDE-Net paper
 use_true_gh = False             # use true gh as the initial gh, for testing
 
