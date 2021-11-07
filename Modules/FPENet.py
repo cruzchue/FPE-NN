@@ -1,6 +1,8 @@
 from keras import layers, models, optimizers
 from .PartialDerivativeNonGrid import PartialDerivativeNonGrid as pd_ng
 
+# ERCC
+from tensorflow import keras
 
 class FPENet:
     """
@@ -29,7 +31,11 @@ class FPENet:
         delta_x = layers.Dot(axes=(2, 1))([dx_dt, t])       # shape [batch, x_points, t_size]
         answer = layers.Add()([x, delta_x])
         network = models.Model([x, t], answer)
-        network.compile(optimizer=optimizers.Adam(lr=learning_rate), loss=loss)     # mse: mean squared error
+
+        # ERCC
+        #network.compile(optimizer=optimizers.Adam(lr=learning_rate), loss=loss)     # mse: mean squared error
+        network.compile(optimizer=keras.optimizers.Adam(lr=learning_rate), loss=loss)     # mse: mean squared error
+
         print(network.summary())
         network.get_layer(name=self.name + 'dx').set_weights([self.dx])             # expecting a list of arrays
         network.get_layer(name=self.name + 'dxx').set_weights([self.dxx])           # expecting a list of arrays
@@ -50,7 +56,11 @@ class FPENet:
         delta_p = layers.Dot(axes=(2, 1))([dp_dt, t])   # shape [batch, x_points, t_size]
         answer = layers.Add()([p, delta_p])
         network = models.Model([x, t], answer)
-        network.compile(optimizer=optimizers.Adam(lr=learning_rate), loss=loss)
+
+        # ERCC
+        #network.compile(optimizer=optimizers.Adam(lr=learning_rate), loss=loss)
+        network.compile(optimizer=keras.optimizers.Adam(lr=learning_rate), loss=loss)
+
         print(network.summary())
         network.get_layer(name=self.name + 'dx').set_weights([self.dx])             # expecting a list of arrays
         network.get_layer(name=self.name + 'dxx').set_weights([self.dxx])           # expecting a list of arrays

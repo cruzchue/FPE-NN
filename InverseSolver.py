@@ -21,7 +21,7 @@ verb = 2                        # verbose for tensorflow
 
 ip_dir = './Pxt'                # directory of the input npz
 ip_name = 'sinusoid.npz'                    # name of the input npz
-op_dir = '/home/liuwei/GitHub/Result'       # directory of the training output, a folder will be auto-generated
+op_dir = './Result'       # directory of the training output, a folder will be auto-generated
 model_name = 'Noisy'            # name of the model
 
 gh_learning_rate = 0.1**5       # learning rate of gh trainer
