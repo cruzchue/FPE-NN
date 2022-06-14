@@ -43,7 +43,7 @@ use_true_gh = False             # use true gh as the initial gh, for testing
 smooth_p = True                 # smooth pxt with Savitzky-Golay filter
 sf_range = 7                    # point range of Savitzky-Golay filter
 smooth_gh = True                # smooth gh with Gaussian filter
-smooth_gh_sigma = 10            # initial sigma in Gaussian filter to smooth gh
+smooth_gh_sigma = 500           # initial sigma in Gaussian filter to smooth gh
 
 # ~~~~ setting ends ~~~~
 
@@ -141,6 +141,7 @@ def main():
     # === network for gh training ===
     fpe_net = FPENet(x_coord=x, name=model_name, t_sro=t_sro)
     gh_nn = fpe_net.recur_train_gh(learning_rate=gh_learning_rate, loss=Loss.sum_square)
+    
     # === network for p training ===
     p_nn = fpe_net.recur_train_p(learning_rate=p_learning_rate, loss=Loss.sum_square,
                                  fix_g=gg_v, fix_h=hh_v)
