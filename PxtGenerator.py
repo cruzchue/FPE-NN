@@ -13,25 +13,54 @@ seed = 20211103
 
 x_min = -15 * math.pi
 x_max = 15 * math.pi
+#x_min = -18 * math.pi
+#x_max = 18 * math.pi
+
+
 x_points = 300          # total number of x points between x_min and x_max
 x_gap = (x_max - x_min) / x_points                              # no need change
 x = np.linspace(x_min, x_max, num=x_points, endpoint=False)     # no need change
-slice_range = [40, -40]     # the slice range of P(x,t) to be saved in npz
+slice_range = [0, -1]     # the slice range of P(x,t) to be saved in npz
 
 t_gap = 1               # gap between time points
 t_points = 50           # total number of t points for each distribution sequence
 n_sample = 200          # total number of distribution sequences
 xi = 0.03               # a factor for noise addition
 
-g = 0.08 * np.sin(0.2 * x) - 0.002      # set g(x)
+
+
+####### change to a two-well g ##########
+
+# PREVIOUS
+g_OLD = 0.08 * np.sin(0.2 * x) - 0.002      # set g(x)
+
+###
+Acte=.000002
+Bcte=500
+
+#g=Acte* ( ((x**2)-Bcte)**2 ) ; #potential
+g = (Acte*(x**3)) -( ( 4*Acte*Bcte*x)); # derivative of potential
+
+'''
+plt.figure()
+plt.plot(x,g_OLD,'r.-')
+plt.plot(x,g,'g.-')
+plt.grid()
+'''
+
+#######################################
+
 h = 0.045 * np.ones(x.shape)            # set h(x)
 
-mu_range = [-12, 12]        # range of mu in gaussian distribution, for creating initial distribution
+#mu_range = [-12, 12]        # range of mu in gaussian distribution, for creating initial distribution
+mu_range = [-16, 16]        # range of mu in gaussian distribution, for creating initial distribution
+
 var_range = [7, 12]         # range of variance in Gaussian distribution, for creating initial distribution
 gau_no = 1                  # add how many Gaussian distribution in the initial distribution
 
 op_dir = './Pxt/'           # directory of the output npz
-op_name = 'sinusoid.npz'    # name of the output npz
+#op_name = 'sinusoid.npz'    # name of the output npz
+op_name = 'tiwaryWide.npz'    # name of the output npz
 
 #show_plot = False           # boolean, plot or not plot the generated distributions
 show_plot = True
@@ -134,6 +163,7 @@ def main():
 
             plt.title('sample {}'.format(i), fontsize=20)
             plt.legend(fontsize=20)
+            plt.grid()
             plt.ion()
             plt.pause(1)
             plt.close()
@@ -146,3 +176,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    
