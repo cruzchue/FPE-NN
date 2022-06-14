@@ -19,8 +19,9 @@ seed = 20211103
 verb = 2                        # verbose for tensorflow
 
 
-ip_dir = './Pxt'                # directory of the input npz
-ip_name = 'sinusoid.npz'                    # name of the input npz
+#ip_dir = './Pxt'                # directory of the input npz
+ip_dir = '../FPE-NNwide/Pxt'
+ip_name = 'tiwaryWide.npz'                    # name of the input npz
 op_dir = './Result'       # directory of the training output, a folder will be auto-generated
 model_name = 'Noisy'            # name of the model
 
@@ -35,15 +36,17 @@ p_epoch_factor = 5              # factor to control the epoch increasing of p tr
 p_patience = 10                 # patience of p trainer, for early stopping
 p_recur_win = 5                 # how many neighbouring time points used in p trainer
 
-#n_iter = 500                    # how many rounds of alternating training on gh and p
-n_iter = 25
+n_iter = 500                    # how many rounds of alternating training on gh and p
+#n_iter = 25
 t_sro = 7                       # total sum rules for generating derivative matrix, refer to PDE-Net paper
 use_true_gh = False             # use true gh as the initial gh, for testing
 
 smooth_p = True                 # smooth pxt with Savitzky-Golay filter
 sf_range = 7                    # point range of Savitzky-Golay filter
 smooth_gh = True                # smooth gh with Gaussian filter
-smooth_gh_sigma = 500           # initial sigma in Gaussian filter to smooth gh
+#smooth_gh_sigma = 10            # initial sigma in Gaussian filter to smooth gh
+smooth_gh_sigma = 500            # initial sigma in Gaussian filter to smooth gh
+
 
 # ~~~~ setting ends ~~~~
 
@@ -141,7 +144,6 @@ def main():
     # === network for gh training ===
     fpe_net = FPENet(x_coord=x, name=model_name, t_sro=t_sro)
     gh_nn = fpe_net.recur_train_gh(learning_rate=gh_learning_rate, loss=Loss.sum_square)
-    
     # === network for p training ===
     p_nn = fpe_net.recur_train_p(learning_rate=p_learning_rate, loss=Loss.sum_square,
                                  fix_g=gg_v, fix_h=hh_v)
@@ -253,3 +255,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    
